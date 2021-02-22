@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <style>
+        .user {
+            width: 50%;
+            background-color: salmon;
+            border-radius: 10px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 5px 5px 10px gray;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="user-container">
+
+    </div>
+
+    <script>
+        const dataLoad = async () => {
+            const url = `https://jsonplaceholder.typicode.com/users`;
+            try {
+                const promise = await fetch(url)
+                const data = await promise.json();
+                displayData(data)
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
+        const displayData = (data) => {
+            let userHTML = '';
+            data.forEach(user => {
+                userHTML += `
+                <div class="user">
+                    <h1>Name: ${user.name}</h1>
+                    <p>Email: ${user.email}</p>
+                    <p>Company: ${user.company.name}. ${user.company.catchPhrase}. ${user.company.bs}.</p>
+                </div>
+                `;
+            });
+            const userContainer = document.getElementById('user-container');
+            userContainer.innerHTML = userHTML;
+        }
+        dataLoad();
+    </script>
+</body>
+
+</html>
